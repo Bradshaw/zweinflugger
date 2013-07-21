@@ -1,6 +1,6 @@
 function init()
 global = {
-		RATE = 300,
+		RATE = 60,
 		MAX_DT = 1/30,
 		TIMESCALE = 1,
 		PLAYERTIME = 0.8,

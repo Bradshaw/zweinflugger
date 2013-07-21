@@ -56,6 +56,9 @@ function bullet.draw()
 	for i,v in ipairs(bullet.all) do
 		v:draw()
 	end
+	love.graphics.draw(enemy.bullim.aimbatch)
+	love.graphics.draw(enemy.bullim.sinbatch)
+	love.graphics.draw(enemy.bullim.scatterbatch)
 end
 
 function bullet_mt:update( dt )

@@ -9,6 +9,20 @@ keyboard controls :
 
 
 ]]
+love.keyboard.isBown = love.keyboard.isDown
+love.keyboard.isDown = function(key, ...)
+	if key then
+		if type(key)=="table" then
+			for i,v in ipairs(key) do
+				local truth = love.keyboard.isDown(v)
+				if truth then return true end
+			end
+		else
+			return love.keyboard.isBown(key) or love.keyboard.isDown(...)
+		end
+	end
+	return false
+end
 
 function input.new(mode, controls)
 	local self = setmetatable({},{__index = input_mt})
@@ -51,4 +65,4 @@ function input_mt:dy()
 end
 
 input.DEFAULTP1 = input.new("keyboard",{"up", "down", "left", "right", "rctrl"})
-input.DEFAULTP2 = input.new("keyboard",{"z", "s", "q", "d", "lctrl"})
+input.DEFAULTP2 = input.new("keyboard",{{"z","w"}, "s", {"q","a"}, "d", "lctrl"})

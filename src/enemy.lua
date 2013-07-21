@@ -5,8 +5,11 @@ enemy.img = love.graphics.newImage("images/enemy.png")
 enemy.tur = love.graphics.newImage("images/turret.png")
 enemy.bullim = {}
 enemy.bullim.aim = love.graphics.newImage("images/aim.png")
+enemy.bullim.aimbatch = love.graphics.newSpriteBatch(enemy.bullim.aim)
 enemy.bullim.sin = love.graphics.newImage("images/sin.png")
+enemy.bullim.sinbatch = love.graphics.newSpriteBatch(enemy.bullim.sin)
 enemy.bullim.scatter = love.graphics.newImage("images/scatter.png")
+enemy.bullim.scatterbatch = love.graphics.newSpriteBatch(enemy.bullim.scatter)
 enemy.bullsnd = {}
 enemy.bullsnd.aim = love.audio.newSource("audio/Laser_Shoot3.ogg")
 enemy.bullsnd.aim:setPitch(1.5)
@@ -56,6 +59,9 @@ function enemy.spawn( ... )
 end
 
 function enemy.update(dt)
+	enemy.bullim.aimbatch:clear()
+	enemy.bullim.sinbatch:clear()
+	enemy.bullim.scatterbatch:clear()
 	local i = 1
 	while i<=#enemy.all do
 		local v = enemy.all[i]
@@ -66,6 +72,7 @@ function enemy.update(dt)
 			i=i+1
 		end
 	end
+	
 end
 
 function enemy.draw()
@@ -75,7 +82,7 @@ function enemy.draw()
 end
 
 function bdraw(self)
-	love.graphics.draw(self.bim,self.x,self.y,0,1,1,self.bim:getWidth(),self.bim:getHeight())
+	self.bim:add(self.x,self.y,0,1,1,self.bim:getImage():getWidth(),self.bim:getImage():getHeight())
 end
 
 function enemy_mt:aimshoot()
@@ -97,7 +104,7 @@ function enemy_mt:aimshoot()
 		b = bullet.new(self.x,self.y,nx*75,ny*75)
 		b.radius = 6
 		b.draw = bdraw
-		b.bim = enemy.bullim.aim
+		b.bim = enemy.bullim.aimbatch
 		table.insert(self.mybullets, b)
 		lastang = math.atan2(dy,dx)
 	end
@@ -121,7 +128,7 @@ function enemy_mt:scattershoot()
 			local b = bullet.new(self.x,self.y,math.cos(ld)*rspeed,math.sin(ld)*rspeed)
 			b.radius = 1.5
 			b.draw = bdraw
-			b.bim = enemy.bullim.scatter
+			b.bim = enemy.bullim.scatterbatch
 			table.insert(self.mybullets, b)
 		end
 		self.lastang = d
@@ -142,7 +149,7 @@ function enemy_mt:sinshoot()
 		local b = bullet.new(self.x,self.y,math.cos(d)*100,math.sin(d)*100)
 		b.radius = 3
 		b.draw = bdraw
-		b.bim = enemy.bullim.sin
+		b.bim = enemy.bullim.sinbatch
 		table.insert(self.mybullets, b)
 		self.lastang = d
 	end
