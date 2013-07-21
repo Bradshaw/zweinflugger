@@ -23,17 +23,20 @@ function splod.new(x,y,dx,dy,anim,perframe,r,g,b,a)
 	self.g = g or 255
 	self.b = b or 255
 	self.a = a or 255
+	self.scale = 1
 	self.rot = math.random()*2*math.pi
 	return self
 end
 
 function splod.spawn( ... )
-	table.insert(splod.all, splod.new(...))
+	local s = splod.new(...)
+	table.insert(splod.all, s)
+	return s
 end
 
 function splod.greysmoke(x,y)
 	local light = math.random(64,180)
-	splod.spawn(
+	local s = splod.spawn(
 		x,
 		y+math.random(-3,3),
 		math.random(-20,20),
@@ -45,6 +48,7 @@ function splod.greysmoke(x,y)
 		light,
 		255
 	)
+	s.scale = 2
 end
 function splod.jetsmoke(x,y)
 	local light = math.random(64,180)
@@ -63,7 +67,7 @@ function splod.jetsmoke(x,y)
 end
 function splod.fire(x,y)
 	local light = math.random(127,255)
-	splod.spawn(
+	local s = splod.spawn(
 		x+math.random(-2,2),
 		y+math.random(-2,2),
 		math.random(-10,10),
@@ -75,6 +79,7 @@ function splod.fire(x,y)
 		light/4,
 		255
 	)
+	s.scale = 1.5
 end
 
 
@@ -114,6 +119,6 @@ end
 function splod_mt:draw()
 	local r,g,b,a = love.graphics.getColor()
 	love.graphics.setColor(self.r,self.g,self.b,self.a)
-	love.graphics.drawq(self.anim.image,self.anim[self.frame],self.x,self.y,self.rot,1,1,self.anim.off.x,self.anim.off.y)
+	love.graphics.drawq(self.anim.image,self.anim[self.frame],self.x,self.y,self.rot,self.scale,self.scale,self.anim.off.x,self.anim.off.y)
 	love.graphics.setColor(r,g,b,a)
 end

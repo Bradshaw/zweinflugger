@@ -1,5 +1,5 @@
-function love.load(arg)
-	global = {
+function init()
+global = {
 		RATE = 300,
 		MAX_DT = 1/30,
 		TIMESCALE = 1,
@@ -13,6 +13,20 @@ function love.load(arg)
 	xsize = 200
 	ysize = 400
 	scale = 2
+end
+
+function love.load(arg)
+	init()
+	fontim = love.graphics.newImage("images/myfont.png")
+	fontim:setFilter("nearest","nearest")
+	font = love.graphics.newImageFont(fontim,
+    " abcdefghijklmnopqrstuvwxyz" ..
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
+    "123456789.,!?-+/():;%_`'*__[]\"" ..
+    "<>&#=$")
+	love.graphics.setFont(font)
+	music = love.audio.newSource("audio/tweinflugger.ogg")
+	music:setLooping(true)
 	love.graphics.setMode( xsize*scale, ysize*scale, false, false, 0 )
 	love.graphics.setDefaultImageFilter("nearest","nearest")
 	love.graphics.setLine(1,"rough")
@@ -27,6 +41,7 @@ function love.load(arg)
 	require("bullet")
 	gstate = require "gamestate"
 	game = require("game")
+	gameover = require("gameover")
 	gstate.switch(game)
 end
 

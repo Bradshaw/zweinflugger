@@ -19,7 +19,10 @@ function bullet.fromProto( bull, x, y, dx, dy, target, draw, update )
 	self.y = y or self.y
 	self.dx = dx or self.dx
 	self.dy = dy or self.dy
-	self.radius = 2 or self.radius
+	self.radius = self.radius
+	self.r = self.r
+	self.g = self.g
+	self.b = self.b
 	if update then
 		self.update = update
 	end
@@ -61,7 +64,7 @@ function bullet_mt:update( dt )
 end
 
 function bullet_mt:draw()
-	love.graphics.setColor(255,127,0)
+	love.graphics.setColor(self.r,self.g,self.b)
 	love.graphics.circle("fill",self.x,self.y,self.radius+1)
 	love.graphics.setColor(255,255,255)
 	love.graphics.circle("fill",self.x,self.y,self.radius)
