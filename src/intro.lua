@@ -6,9 +6,26 @@ end
 
 
 function state:enter()
+	init()
+	disptime = -1
+	--throwtext("Go!")
+	player.all = {}
+	enemy.all = {}
+	bullet.all = {}
+	p1 = player.new(input.DEFAULTP2)
+	p1.img = player.img.ship1
+	p1.x = xsize/4
+	p2 = player.new(input.DEFAULTP1)
+	p2.img = player.img.ship2
+	p2.x = 3*xsize/4
+	for i=1,3 do
+		--enemy.spawn()
+	end
+	spawncool = 1
+	spawntime = 2
+	music:play()
 	global.ENEMYTIME = 0.5
 	killen = 0
-	throwtext("Game over")
 end
 
 
@@ -47,7 +64,7 @@ function state:keypressed(key, uni)
 		love.event.push("quit")
 	end
 	if key=="return" then
-		gstate.switch(intro)
+		gstate.switch(game)
 	end
 end
 
@@ -79,11 +96,10 @@ function state:draw()
 	--player.draw()
 	enemy.draw()
 	bullet.draw()
-	love.graphics.print(text,xsize/2-textoff,ysize/2-(math.pow(disptime,2))*ysize/2-20,0,3,3)
-	love.graphics.draw(titleim,0,(ysize/2-100)*disptime/2)
-	love.graphics.print("Score: "..(p1.score+p2.score),20,ysize/2,0,2,2)
-	love.graphics.print(p1.name..": "..(p1.score),20,ysize/2+25,0,2,2)
-	love.graphics.print(p2.name..": "..(p2.score),20,ysize/2+50,0,2,2)
+	love.graphics.draw(titleim,0, ysize/2-75 +   math.pow(((gtime*3)%2)-1,4)*25)
+	love.graphics.print("By Kevin\"Gaeel\" Bradshaw",xsize/2-font:getWidth("By Kevin\"Gaeel\" Bradshaw")/2,ysize/2+50,0,1,1)
+	love.graphics.print("Made in 48 hours for",xsize/2-font:getWidth("Made in 48 hours for")/2,ysize/2+65,0,1,1)
+	love.graphics.print("Funkyture 2.0",xsize/2-font:getWidth("Funkyture 2.0")/2,ysize/2+80,0,1,1)
 	--flashy.draw()
 end
 

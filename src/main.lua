@@ -25,6 +25,7 @@ function love.load(arg)
     "123456789.,!?-+/():;%_`'*__[]\"" ..
     "<>&#=$")
 	love.graphics.setFont(font)
+	titleim = love.graphics.newImage("images/title.png")
 	music = love.audio.newSource("audio/tweinflugger.ogg")
 	music:setLooping(true)
 	love.graphics.setMode( xsize*scale, ysize*scale, false, false, 0 )
@@ -41,8 +42,9 @@ function love.load(arg)
 	require("bullet")
 	gstate = require "gamestate"
 	game = require("game")
+	intro = require("intro")
 	gameover = require("gameover")
-	gstate.switch(game)
+	gstate.switch(intro)
 end
 
 
