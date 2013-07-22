@@ -1,25 +1,9 @@
-solid.lua
-=========
+Zweinflugger!
+=============
 
 Attempt at a crappy frameworky thingy for Löve2d
 
 
-Needz
------
+Oh no! Aliens! Lucky we got these prototype aircraft we stole from the germans in WWII!
 
-> Generic way of dealing with timestepped physics
-> Animation package that can use spritesheets or named pngs
-
-
-
-Conventions and system
-----------------------
-
-If this is going to be useful for other projects, then I need to be consistent.
-
-
-
-
-
-solidstepper
-------------
+Two players on one keyboard. Player one uses WASD (or ZQSD for azerty) and player two uses the arrows. As long as one Zweinflugger is alive, a downed Zweinflugger can ressurect and return to battle. Shoot down as many aliens as you can!
