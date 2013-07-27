@@ -97,9 +97,10 @@ function state:draw()
 	enemy.draw()
 	bullet.draw()
 	love.graphics.draw(titleim,0, ysize/2-75 +   math.pow(((gtime*3)%2)-1,4)*25)
-	love.graphics.print("By Kevin\"Gaeel\" Bradshaw",xsize/2-font:getWidth("By Kevin\"Gaeel\" Bradshaw")/2,ysize/2+50,0,1,1)
+	love.graphics.print("By Kevin\"Gaeel\" Bradshaw",xsize/2-font:getWidth("By Kevin \"Gaeel\" Bradshaw")/2,ysize/2+50,0,1,1)
 	love.graphics.print("Made in 48 hours for",xsize/2-font:getWidth("Made in 48 hours for")/2,ysize/2+65,0,1,1)
 	love.graphics.print("Funkyture 2.0",xsize/2-font:getWidth("Funkyture 2.0")/2,ysize/2+80,0,1,1)
+	love.graphics.print("For mini-Gaby",xsize/2-font:getWidth("For mini-Gaby")/2,ysize/2+120,0,1,1)
 	--flashy.draw()
 end
 

@@ -14,6 +14,7 @@ player.img.ship = love.graphics.newImage("images/Ship.png")
 player.img.ship1 = love.graphics.newImage("images/Ship1.png")
 player.img.ship2 = love.graphics.newImage("images/Ship2.png")
 player.img.shipmask = love.graphics.newImage("images/ShipMask.png")
+player.img.oneshot = love.graphics.newImage("images/p1shot.png")
 player.img.twoshot = love.graphics.newImage("images/p2shot.png")
 player.img.flam = love.graphics.newImage("images/flam.png")
 player.img.shield = love.graphics.newImage("images/shield.png")
@@ -32,7 +33,11 @@ player.alertsnd:setPitch(-1)
 player.alertsnd:setVolume(0.2)
 
 function player.bull:draw()
-	love.graphics.draw(player.img.twoshot,self.x-3,self.y-3)
+	if self.firedby.number == 1 then
+		love.graphics.draw(player.img.oneshot,self.x-3,self.y-3)
+	else
+		love.graphics.draw(player.img.twoshot,self.x-3,self.y-3)
+	end
 end
 
 function player.new(controlscheme, name, number)
@@ -160,10 +165,14 @@ function player_mt:draw()
 		if self.damaged>0 and (gtime*10 - math.floor(gtime*10))>0.5 then
 			love.graphics.setColor(255,255,255)
 		else
-			love.graphics.setColor(255,fcol/2,fcol/8)
+			if self.number == 1 then
+				love.graphics.setColor(255,fcol/2,fcol/8)
+			else
+				love.graphics.setColor(fcol/2,fcol/2,255)
+			end
 		end	
 		love.graphics.draw(player.img.flam,self.x,self.y+7+self.startoff,0,sc,sc,5.5+math.random(),0)
-		sc = 0.75*math.random()/2
+		sc = 0.75*math.random()
 		love.graphics.setColor(255,255,255)
 		love.graphics.draw(player.img.flam,self.x,self.y+8+self.startoff,0,sc,sc,6,0)
 		if self.hitpoints==2 then

@@ -136,7 +136,7 @@ function enemy_mt:scattershoot()
 end
 
 function enemy_mt:sinshoot()
-	self.cooldown = 0.1
+	self.cooldown = 0.2
 	if self.shoottime<=0 then
 		self.snd = self.snd or enemy.bullsnd.sin
 		if self.x>0 and self.y>0 and self.x<xsize and self.y<ysize then
