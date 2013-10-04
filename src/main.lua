@@ -10,9 +10,9 @@ global = {
 	}
 	time = 0
 	gtime = 0
-	xsize = 200
-	ysize = 400
-	scale = 2
+	xsize = 256
+	ysize = 320
+	scale = 4
 end
 
 function love.load(arg)

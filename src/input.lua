@@ -65,4 +65,4 @@ function input_mt:dy()
 end
 
 input.DEFAULTP1 = input.new("keyboard",{"up", "down", "left", "right", "rctrl"})
-input.DEFAULTP2 = input.new("keyboard",{{"z","w"}, "s", {"q","a"}, "d", "lctrl"})
+input.DEFAULTP2 = input.new("keyboard",{"q", "z", "a", "s", "lctrl"})

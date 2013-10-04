@@ -49,7 +49,7 @@ function player.new(controlscheme, name, number)
 	self.snd = love.audio.newSource("audio/thud.ogg")
 	self.snd:setVolume(0.1)
 	self.x = 100
-	self.y = 300
+	self.y = 2*ysize/3
 	self.score = 0
 	self.speed = 100
 	self.cooldown = 0.1

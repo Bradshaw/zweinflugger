@@ -43,10 +43,10 @@ end
 
 
 function state:keypressed(key, uni)
-	if key=="escape" then
+	if key=="escape" or key=="l" then
 		love.event.push("quit")
 	end
-	if key=="return" then
+	if key=="return" or key=="j" or key=="q" or key=="a" or key=="s" or key=="z" then
 		gstate.switch(intro)
 	end
 end
@@ -80,7 +80,7 @@ function state:draw()
 	enemy.draw()
 	bullet.draw()
 	love.graphics.print(text,xsize/2-textoff,ysize/2-(math.pow(disptime,2))*ysize/2-20,0,3,3)
-	love.graphics.draw(titleim,0,(ysize/2-100)*disptime/2)
+	love.graphics.draw(titleim,xsize/2-100,(ysize/2-100)*disptime/2)
 	love.graphics.print("Score: "..(p1.score+p2.score),20,ysize/2,0,2,2)
 	love.graphics.print(p1.name..": "..(p1.score),20,ysize/2+25,0,2,2)
 	love.graphics.print(p2.name..": "..(p2.score),20,ysize/2+50,0,2,2)

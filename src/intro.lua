@@ -60,10 +60,10 @@ end
 
 
 function state:keypressed(key, uni)
-	if key=="escape" then
+	if key=="escape" or key=="l" then
 		love.event.push("quit")
 	end
-	if key=="return" then
+	if key=="return" or key=="j" or key=="q" or key=="a" or key=="s" or key=="z" then
 		gstate.switch(game)
 	end
 end
@@ -96,7 +96,7 @@ function state:draw()
 	--player.draw()
 	enemy.draw()
 	bullet.draw()
-	love.graphics.draw(titleim,0, ysize/2-75 +   math.pow(((gtime*3)%2)-1,4)*25)
+	love.graphics.draw(titleim,xsize/2-100, ysize/2-75 +   math.pow(((gtime*3)%2)-1,4)*25)
 	love.graphics.print("By Kevin\"Gaeel\" Bradshaw",xsize/2-font:getWidth("By Kevin \"Gaeel\" Bradshaw")/2,ysize/2+50,0,1,1)
 	love.graphics.print("Made in 48 hours for",xsize/2-font:getWidth("Made in 48 hours for")/2,ysize/2+65,0,1,1)
 	love.graphics.print("Funkyture 2.0",xsize/2-font:getWidth("Funkyture 2.0")/2,ysize/2+80,0,1,1)
