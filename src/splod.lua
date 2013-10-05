@@ -119,6 +119,6 @@ end
 function splod_mt:draw()
 	local r,g,b,a = love.graphics.getColor()
 	love.graphics.setColor(self.r,self.g,self.b,self.a)
-	love.graphics.drawq(self.anim.image,self.anim[self.frame],self.x,self.y,self.rot,self.scale,self.scale,self.anim.off.x,self.anim.off.y)
+	love.graphics.draw(self.anim.image,self.anim[self.frame],self.x,self.y,self.rot,self.scale,self.scale,self.anim.off.x,self.anim.off.y)
 	love.graphics.setColor(r,g,b,a)
 end
