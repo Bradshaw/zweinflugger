@@ -22,10 +22,10 @@ function state:enter()
 	player.all = {}
 	enemy.all = {}
 	bullet.all = {}
-	p1 = player.new(input.DEFAULTP2)
+	p1 = player.new(input.DEFAULTP1)
 	p1.img = player.img.ship1
 	p1.x = xsize/4
-	p2 = player.new(input.DEFAULTP1)
+	p2 = player.new(input.DEFAULTP2)
 	p2.img = player.img.ship2
 	p2.x = 3*xsize/4
 	for i=1,3 do

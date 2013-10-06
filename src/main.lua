@@ -16,6 +16,7 @@ global = {
 end
 
 function love.load(arg)
+	love.mouse.setVisible(false)
 	init()
 	fontim = love.graphics.newImage("images/myfont.png")
 	fontim:setFilter("nearest","nearest")
