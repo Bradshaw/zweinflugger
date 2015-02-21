@@ -112,6 +112,7 @@ function state:draw()
 	love.graphics.translate(-plxoff*0.1,-plyoff*0.1)
 	love.graphics.translate(math.sin(love.timer.getTime()*60)*shake*20,math.cos(love.timer.getTime()*63)*shake*20)
 	background.draw()
+	points.draw()
 	if p1.state == player.DEAD then
 		love.graphics.setBlendMode("additive")
 		for i=1,3 do
@@ -152,7 +153,6 @@ function state:draw()
 	player.draw()
 	enemy.draw()
 	bullet.draw()
-	points.draw()
 	love.graphics.pop()
 	love.graphics.setColor(255,255,255)
 

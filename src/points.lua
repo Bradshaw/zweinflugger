@@ -57,11 +57,11 @@ end
 
 function points_mt:draw()
 	if self.pl == p1 then
-		love.graphics.setColor(255,64,64,math.random(0,255))
+		love.graphics.setColor(255,196,64,math.random(0,196))
 	else
-		love.graphics.setColor(64,64,255,math.random(0,255))
+		love.graphics.setColor(255,196,64,math.random(0,196))
 	end
-	love.graphics.setBlendMode("additive")
-	love.graphics.draw(points.img, self.x, self.y,self.spinoff+love.timer.getTime()*self.spinspd,0.5,0.5,points.img:getWidth()/2,points.img:getHeight()/2)
-	love.graphics.setBlendMode("alpha")
+	--love.graphics.setBlendMode("additive")
+	love.graphics.draw(points.img, self.x, self.y,self.spinoff+love.timer.getTime()*self.spinspd,0.3,0.3,points.img:getWidth()/2,points.img:getHeight()/2)
+	--love.graphics.setBlendMode("alpha")
 end
