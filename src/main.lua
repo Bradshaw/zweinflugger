@@ -10,13 +10,15 @@ global = {
 	}
 	time = 0
 	gtime = 0
-	xsize = 200
-	ysize = 400
 	scale = 2
+	xsize = love.graphics.getWidth()/scale
+	ysize = love.graphics.getHeight()/scale
 end
 
 function love.load(arg)
 	init()
+	shake = 0
+	shotdiff = 1
 	fontim = love.graphics.newImage("images/myfont.png")
 	fontim:setFilter("nearest","nearest")
 	font = love.graphics.newImageFont(fontim,
@@ -26,13 +28,15 @@ function love.load(arg)
     "<>&#=$")
 	love.graphics.setFont(font)
 	titleim = love.graphics.newImage("images/title.png")
+	robovoice = love.audio.newSource("audio/zweinrobot.ogg")
 	music = love.audio.newSource("audio/tweinflugger.ogg")
 	music:setLooping(true)
-	love.graphics.setMode( xsize*scale, ysize*scale, false, false, 0 )
-	love.graphics.setDefaultImageFilter("nearest","nearest")
-	love.graphics.setLine(1,"rough")
+	--love.graphics.setMode( xsize*scale, ysize*scale, false, false, 0 )
+	love.graphics.setDefaultFilter("nearest","nearest")
+	love.graphics.setLineStyle("rough", 1)
 	screen = love.graphics.newCanvas(512,512)
 	screen:setFilter("nearest","nearest")
+	require("points")
 	require("input")
 	require("background")
 	require("splod")

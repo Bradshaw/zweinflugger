@@ -7,6 +7,11 @@ end
 
 function state:enter()
 	init()
+	robovoice:play()
+	musicspd = musicspd or 0
+	music:setPitch(1)
+	music:rewind()
+	music:play()
 	disptime = -1
 	--throwtext("Go!")
 	player.all = {}
@@ -23,7 +28,6 @@ function state:enter()
 	end
 	spawncool = 1
 	spawntime = 2
-	music:play()
 	global.ENEMYTIME = 0.5
 	killen = 0
 end
@@ -76,6 +80,8 @@ end
 
 function state:update(dt)
 	disptime = math.min(2,disptime+dt/1)
+	musicspd = math.min(1,musicspd + dt)
+	local dt = dt * musicspd
 	background.update(dt)
 	splod.update(dt)
 	--player.update(dt*global.PLAYERTIME)
@@ -96,11 +102,11 @@ function state:draw()
 	--player.draw()
 	enemy.draw()
 	bullet.draw()
-	love.graphics.draw(titleim,0, ysize/2-75 +   math.pow(((gtime*3)%2)-1,4)*25)
+	love.graphics.draw(titleim,xsize/2-titleim:getWidth()/2, ysize/2-75 +   math.pow(((gtime*3)%2)-1,4)*25)
 	love.graphics.print("By Kevin\"Gaeel\" Bradshaw",xsize/2-font:getWidth("By Kevin \"Gaeel\" Bradshaw")/2,ysize/2+50,0,1,1)
-	love.graphics.print("Made in 48 hours for",xsize/2-font:getWidth("Made in 48 hours for")/2,ysize/2+65,0,1,1)
+	love.graphics.print("Original version made for",xsize/2-font:getWidth("Original version made for")/2,ysize/2+65,0,1,1)
 	love.graphics.print("Funkyture 2.0",xsize/2-font:getWidth("Funkyture 2.0")/2,ysize/2+80,0,1,1)
-	love.graphics.print("For mini-Gaby",xsize/2-font:getWidth("For mini-Gaby")/2,ysize/2+120,0,1,1)
+	love.graphics.print("For Gabouille",xsize/2-font:getWidth("For Gabouille")/2,ysize/2+120,0,1,1)
 	--flashy.draw()
 end
 

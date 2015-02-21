@@ -6,8 +6,14 @@ splod.eight = {}
 for i=1,8 do
 	table.insert(splod.eight,love.graphics.newQuad(8*(i-1),0,8,8,64,8))
 end
+splod.meight = {}
+for i=8,1,-1 do
+	table.insert(splod.meight,love.graphics.newQuad(8*(i-1),0,8,8,64,8))
+end
 splod.eight.image = love.graphics.newImage("images/splod1.png")
 splod.eight.off = {x=4,y=4}
+splod.meight.image = splod.eight.image
+splod.meight.off = splod.eight.off
 
 function splod.new(x,y,dx,dy,anim,perframe,r,g,b,a)
 	local self = setmetatable({},{__index=splod_mt})
@@ -32,6 +38,63 @@ function splod.spawn( ... )
 	local s = splod.new(...)
 	table.insert(splod.all, s)
 	return s
+end
+
+function splod.magic(x,y,pl)
+	local s = splod.spawn(
+		x+math.random(-2,2),
+		y+math.random(-2,2),
+		math.random(-10,10),
+		math.random(-10,10),
+		splod.meight,
+		0.05+math.random()*0.05,
+		(pl==p1 and 255 or 0),
+		127,
+		(pl==p1 and 0 or 255),
+		255
+	)
+	s.scale = 0.75
+	s = splod.spawn(
+		x+math.random(-2,2),
+		y+math.random(-2,2),
+		math.random(-20,20),
+		math.random(-20,20),
+		splod.eight,
+		0.05+math.random()*0.05,
+		255,255,255,
+		255
+	)
+	s.scale = 0.75
+end
+function splod.magic2(x,y,pl)
+	for i=1,20 do
+		local a = math.random()*math.pi*2
+		local d = math.random()*30
+		local s = splod.spawn(
+			x+math.random(-2,2),
+			y+math.random(-2,2),
+			math.cos(a)*d,
+			math.sin(a)*d,
+			splod.meight,
+			0.05+math.random()*0.05,
+			(pl==p1 and 255 or 0),
+			127,
+			(pl==p1 and 0 or 255),
+			255
+		)
+		s.scale = 0.75
+		s = splod.spawn(
+			x+math.random(-2,2),
+			y+math.random(-2,2),
+			math.cos(a)*d*2,
+			math.sin(a)*d*2,
+			splod.eight,
+			0.05+math.random()*0.05,
+			255,255,255,
+			255
+		)
+		s.scale = 0.75
+	end
 end
 
 function splod.greysmoke(x,y)
@@ -119,6 +182,6 @@ end
 function splod_mt:draw()
 	local r,g,b,a = love.graphics.getColor()
 	love.graphics.setColor(self.r,self.g,self.b,self.a)
-	love.graphics.drawq(self.anim.image,self.anim[self.frame],self.x,self.y,self.rot,self.scale,self.scale,self.anim.off.x,self.anim.off.y)
+	love.graphics.draw(self.anim.image,self.anim[self.frame],self.x,self.y,self.rot,self.scale,self.scale,self.anim.off.x,self.anim.off.y)
 	love.graphics.setColor(r,g,b,a)
 end

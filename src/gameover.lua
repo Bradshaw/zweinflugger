@@ -9,6 +9,8 @@ function state:enter()
 	global.ENEMYTIME = 0.5
 	killen = 0
 	throwtext("Game over")
+	cooltorestart = 2
+	musicspd = 1
 end
 
 
@@ -58,7 +60,15 @@ end
 
 
 function state:update(dt)
+	p1.x = p1.x+(xsize/4-p1.x)*dt
+	p2.x = p2.x+(3*xsize/4-p2.x)*dt
+	p1.y = p1.y+((ysize/3) * 2-p1.y)*dt
+	p2.y = p2.y+((ysize/3) * 2-p2.y)*dt
+	musicspd = math.max(0,musicspd - dt*0.25)
+	music:setPitch(musicspd)
+	cooltorestart = math.max(cooltorestart-dt,0)
 	disptime = math.min(2,disptime+dt/1)
+	local dt = dt*math.max(musicspd,0.1)
 	background.update(dt)
 	splod.update(dt)
 	--player.update(dt*global.PLAYERTIME)
@@ -80,10 +90,12 @@ function state:draw()
 	enemy.draw()
 	bullet.draw()
 	love.graphics.print(text,xsize/2-textoff,ysize/2-(math.pow(disptime,2))*ysize/2-20,0,3,3)
-	love.graphics.draw(titleim,0,(ysize/2-100)*disptime/2)
+	love.graphics.draw(titleim, xsize/2-titleim:getWidth()/2 ,(ysize/2-100)*disptime/2)
 	love.graphics.print("Score: "..(p1.score+p2.score),20,ysize/2,0,2,2)
 	love.graphics.print(p1.name..": "..(p1.score),20,ysize/2+25,0,2,2)
 	love.graphics.print(p2.name..": "..(p2.score),20,ysize/2+50,0,2,2)
+
+	love.graphics.print("[ENTER] to restart",xsize/2-font:getWidth("[ENTER] to restart")/2,ysize/2+120,0,1,1)
 	--flashy.draw()
 end
 

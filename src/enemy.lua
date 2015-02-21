@@ -1,7 +1,10 @@
 local enemy_mt = {}
 enemy = {}
 enemy.all = {}
-enemy.img = love.graphics.newImage("images/enemy.png")
+enemy.img = {}
+enemy.img[1] = love.graphics.newImage("images/enemy.png")
+enemy.img[2] = love.graphics.newImage("images/enemy2.png")
+enemy.img[3] = love.graphics.newImage("images/enemy3.png")
 enemy.tur = love.graphics.newImage("images/turret.png")
 enemy.bullim = {}
 enemy.bullim.aim = love.graphics.newImage("images/aim.png")
@@ -47,7 +50,9 @@ end
 function enemy.randomtype(...)
 	if #enemy.all<= global.MAXENEMIES then
 		local e = enemy.new( ... )
-		e.doShoot = enemy.shootstyles[math.random(1,#enemy.shootstyles)]
+		local ss = math.random(1,#enemy.shootstyles)
+		e.doShoot = enemy.shootstyles[ss]
+		e.img = enemy.img[ss]
 		table.insert(enemy.all,e)
 	end
 end
@@ -66,6 +71,11 @@ function enemy.update(dt)
 	while i<=#enemy.all do
 		local v = enemy.all[i]
 		if v.purge then
+			shake = math.min(1,shake+0.1)
+			for _,b in ipairs(v.mybullets) do
+				b.shotby = v.shotby
+				b.purge = true
+			end
 			table.remove(enemy.all,i)
 		else
 			v:update(dt)
@@ -86,7 +96,7 @@ function bdraw(self)
 end
 
 function enemy_mt:aimshoot()
-	self.cooldown = 0.75
+	self.cooldown = 0.75/shotdiff
 	if self.shoottime<=0 then
 		self.snd = self.snd or enemy.bullsnd.aim
 		if self.x>0 and self.y>0 and self.x<xsize and self.y<ysize then
@@ -101,7 +111,8 @@ function enemy_mt:aimshoot()
 		local d = math.sqrt(dx*dx+dy*dy)
 		local nx = dx/d
 		local ny = dy/d
-		b = bullet.new(self.x,self.y,nx*75,ny*75)
+		b = bullet.new(self.x,self.y,nx*75*shotdiff,ny*75*shotdiff)
+		b.worth = 5
 		b.radius = 6
 		b.draw = bdraw
 		b.bim = enemy.bullim.aimbatch
@@ -111,7 +122,7 @@ function enemy_mt:aimshoot()
 end
 
 function enemy_mt:scattershoot()
-	self.cooldown = 0.75
+	self.cooldown = 0.75/shotdiff
 	if self.shoottime<=0 then
 		self.snd = self.snd or enemy.bullsnd.scatter
 		if self.x>0 and self.y>0 and self.x<xsize and self.y<ysize then
@@ -125,7 +136,8 @@ function enemy_mt:scattershoot()
 		for i=1,5 do
 			local ld = d+(math.random()*2-1)/20
 			local rspeed = 50*(0.8+math.random()*0.4)
-			local b = bullet.new(self.x,self.y,math.cos(ld)*rspeed,math.sin(ld)*rspeed)
+			local b = bullet.new(self.x,self.y,math.cos(ld)*rspeed*shotdiff,math.sin(ld)*rspeed*shotdiff)
+			b.worth = 1
 			b.radius = 1.5
 			b.draw = bdraw
 			b.bim = enemy.bullim.scatterbatch
@@ -136,7 +148,7 @@ function enemy_mt:scattershoot()
 end
 
 function enemy_mt:sinshoot()
-	self.cooldown = 0.2
+	self.cooldown = 0.2/shotdiff
 	if self.shoottime<=0 then
 		self.snd = self.snd or enemy.bullsnd.sin
 		if self.x>0 and self.y>0 and self.x<xsize and self.y<ysize then
@@ -146,7 +158,8 @@ function enemy_mt:sinshoot()
 		end
 		self.shoottime = self.cooldown
 		local d = (math.pi/2) + math.sin(self.time*self.oscillate)
-		local b = bullet.new(self.x,self.y,math.cos(d)*100,math.sin(d)*100)
+		local b = bullet.new(self.x,self.y,math.cos(d)*100*shotdiff,math.sin(d)*100*shotdiff)
+		b.worth = 1
 		b.radius = 3
 		b.draw = bdraw
 		b.bim = enemy.bullim.sinbatch
@@ -161,7 +174,8 @@ enemy.shootstyles = {
 	enemy_mt.sinshoot
 }
 
-function enemy_mt:die()
+function enemy_mt:die(shooter)
+	self.shotby = shooter
 	if true or enemy.hitsnd:isStopped() then
 		enemy.hitsnd:setPitch(0.9+math.random()*0.2)
 		enemy.hitsnd:stop()
@@ -200,8 +214,8 @@ function enemy_mt:update(dt)
 				end
 				if self.hitpoints<=0 then
 					v.firedby.streak = v.firedby.streak+1
-					v.firedby.score = v.firedby.score + math.pow(math.floor(v.firedby.streak*global.ENEMYTIME+1),2)
-					self:die()
+					--v.firedby.score = v.firedby.score + math.pow(math.floor(v.firedby.streak*global.ENEMYTIME+1),2)
+					self:die(v.firedby)
 				end
 			end
 		end
@@ -221,6 +235,6 @@ function enemy_mt:update(dt)
 end
 
 function enemy_mt:draw()
-	love.graphics.draw(enemy.img,self.x,self.y,0,1,1,enemy.img:getWidth()/2,enemy.img:getHeight()/2)
-	love.graphics.draw(enemy.tur,self.x,self.y,self.lastang,1,1,5,enemy.tur:getHeight()/2)
+	love.graphics.draw(self.img,self.x,self.y,0,1,1,self.img:getWidth()/2,self.img:getHeight()/2)
+	--love.graphics.draw(enemy.tur,self.x,self.y,self.lastang,1,1,5,enemy.tur:getHeight()/2)
 end

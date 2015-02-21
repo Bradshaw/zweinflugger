@@ -23,6 +23,7 @@ function bullet.fromProto( bull, x, y, dx, dy, target, draw, update )
 	self.r = self.r
 	self.g = self.g
 	self.b = self.b
+	--self.worth = 100
 	if update then
 		self.update = update
 	end
@@ -43,7 +44,12 @@ function bullet.update(dt)
 	local i = 1
 	while i<=#bullet.all do
 		local v = bullet.all[i]
-		if v.purge or v.x<-10 or v.y<-10 or v.x>xsize+10 or v.y>ysize+10 then
+		if v.purge or v.x<-100 or v.y<-100 or v.x>xsize+100 or v.y>ysize+100 then
+			if v.shotby then
+				for i=1,v.worth do
+					points.new(v.shotby,v.x,v.y)
+				end
+			end
 			table.remove(bullet.all, i)
 		else
 			v:update(dt)
