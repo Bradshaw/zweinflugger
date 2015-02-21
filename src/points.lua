@@ -47,8 +47,8 @@ function points_mt:update( dt )
 	end
 	local nx = dx/d
 	local ny = dy/d
-	self.dx = self.dx+nx*dt*100
-	self.dy = self.dy+ny*dt*100
+	self.dx = self.dx+nx*dt*200
+	self.dy = self.dy+ny*dt*200
 	self.x = self.x+self.dx*dt
 	self.y = self.y+self.dy*dt
 	self.dx = self.dx-self.dx*dt
@@ -57,9 +57,9 @@ end
 
 function points_mt:draw()
 	if self.pl == p1 then
-		love.graphics.setColor(255,64,64,math.random(0,127))
+		love.graphics.setColor(255,64,64,math.random(0,255))
 	else
-		love.graphics.setColor(64,64,255,math.random(0,127))
+		love.graphics.setColor(64,64,255,math.random(0,255))
 	end
 	love.graphics.setBlendMode("additive")
 	love.graphics.draw(points.img, self.x, self.y,self.spinoff+love.timer.getTime()*self.spinspd,0.5,0.5,points.img:getWidth()/2,points.img:getHeight()/2)
