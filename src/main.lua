@@ -15,6 +15,8 @@ global = {
 	scale = 2
 end
 
+love.graphics.drawq = love.graphics.draw
+
 function love.load(arg)
 	init()
 	fontim = love.graphics.newImage("images/myfont.png")
@@ -28,9 +30,10 @@ function love.load(arg)
 	titleim = love.graphics.newImage("images/title.png")
 	music = love.audio.newSource("audio/tweinflugger.ogg")
 	music:setLooping(true)
-	love.graphics.setMode( xsize*scale, ysize*scale, false, false, 0 )
-	love.graphics.setDefaultImageFilter("nearest","nearest")
-	love.graphics.setLine(1,"rough")
+	--love.graphics.setMode( xsize*scale, ysize*scale, false, false, 0 )
+	love.graphics.setDefaultFilter("nearest","nearest")
+	love.graphics.setLineStyle("rough")
+	love.graphics.setLineWidth(1)
 	screen = love.graphics.newCanvas(512,512)
 	screen:setFilter("nearest","nearest")
 	require("input")
